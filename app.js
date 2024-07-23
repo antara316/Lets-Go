@@ -12,6 +12,7 @@ const ejsMate = require("ejs-mate");
 const expresserror = require("./utils/expresserror.js");
 const {listingSchema,reviewSchema} = require("./schema.js");
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStratergy = require("passport-local");
@@ -28,7 +29,20 @@ app.use(methodOverride("_method"));
 app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
+const store = MongoStore.create({
+    mongoUrl:dbUrl,
+    crypto:{
+        secret:process.env.SECRET,
+    },
+    touchAfter:24*3600,
+})
+
+store.on("error",() =>{
+    console.log("ERROR in MONGO SESSION STORE",err);
+});
+
 const sessionOptions = {
+    store,
     secret : "mysuperSecretecode",
     resave:false,
     saveUninitialized :true,
@@ -40,6 +54,8 @@ const sessionOptions = {
 };
 
 
+
+const dbUrl = process.env.ATLASDB_URL;
 main()
    .then((res)=>{
     console.log("monoose is listening!");
@@ -47,12 +63,12 @@ main()
    .catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/wonderLust');
+  await mongoose.connect(dbUrl);
 }
 
-app.get("/",(req,res)=>{
-    res.send("port is listening!");
-})
+// app.get("/",(req,res)=>{
+//     res.send("port is listening!");
+// })
 
 app.use(session(sessionOptions));
 app.use(flash());
