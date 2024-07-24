@@ -21,7 +21,7 @@ module.exports.showlisting = async(req,res)=>{
         req.flash("error","listing you requested does not exist!");
         res.redirect("/listings");
     }
-    res.render("Listings/show.ejs",{listing})
+    res.render("listings/show.ejs",{listing})
 };
 
 module.exports.rendernewForm = (req,res)=>{
