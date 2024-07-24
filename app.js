@@ -21,6 +21,7 @@ const User = require("./models/user.js");
 const listingsrouter = require("./routes/listing.js");
 const reviewrouter = require("./routes/review.js");
 const userrouter = require("./routes/user.js");
+const dbUrl = process.env.ATLASDB_URL;
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
@@ -54,8 +55,6 @@ const sessionOptions = {
 };
 
 
-
-const dbUrl = process.env.ATLASDB_URL;
 main()
    .then((res)=>{
     console.log("monoose is listening!");
