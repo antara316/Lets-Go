@@ -6,7 +6,6 @@ const allListing = require("./data.js");
 const Listing = require("../models/listing.js");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wonderLust";
-const dbUrl=process.env.ATLASDB_URL;
 
 
 const mbxGeoCoding = require("@mapbox/mapbox-sdk/services/geocoding");
