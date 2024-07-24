@@ -54,6 +54,9 @@ const sessionOptions = {
     },
 };
 
+
+
+const dbUrl = process.env.ATLASDB_URL;
 main()
    .then((res)=>{
     console.log("monoose is listening!");
